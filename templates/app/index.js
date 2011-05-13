@@ -1,5 +1,8 @@
-var stitch  = require('stitch');
-var express = require('express');
+#!/usr/bin/env node
+var stitch  = require('stitch'),
+    express = require('express'),
+    util    = require('util'),
+    argv    = process.argv.slice(2);
 
 var package = stitch.createPackage({
   paths: [__dirname + '/lib', __dirname + '/app'],
@@ -27,4 +30,6 @@ app.configure(function() {
   app.get('/application.js', package.createServer());
 });
 
-app.listen(9293);
+var port = argv[0] || 9294;
+util.puts("Starting server on port: " + port);
+app.listen();

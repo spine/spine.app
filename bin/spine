@@ -3,20 +3,35 @@ var argv = process.argv.slice(2),
     util = require("util"),
     fs   = require("fs"),
     fd   = require("path")
+
+var console = require("console")
     
 var isDir = function(path){
   return(fs.statSync(path).isDirectory());
 };
+
+var expandPath = function(path, dir){
+  if (fd.basename(path) == path)
+    path = dir + path  
+  return fd.normalize(path);
+};
+
+var camelize = function(str){
+  return str.replace(/-|_+(.)?/g, function(match, chr) {
+    return chr ? chr.toUpperCase() : '';
+  }).replace(/^(.)?/, function(match, chr) {
+    return chr ? chr.toUpperCase() : '';
+  });
+};
     
 var Template = function(template, path, values){
-  this.template = template;
-  this.path     = path;
+  this.template = fd.resolve(template);
+  this.path     = fd.resolve(path);
   this.values   = values || {};
 };
 
 Template.prototype.__defineGetter__("files", function(){
-  var stat = fs.statSync(this.template);
-  if ( !stat.isDirectory() )
+  if ( !isDir(this.template) )
     return [this.template];
   
     var self = this, 
@@ -33,11 +48,15 @@ Template.prototype.__defineGetter__("files", function(){
 
 Template.prototype.write = function(){
   this.files.forEach(function(path){
-    var out = fd.join(this.path, path.replace(this.template, ""));
+    var out = path.replace(this.template, "");
+    out = fd.join(this.path, out);
+    out = fd.normalize(out);
     
-    if ( isDir(path) )
+    if ( isDir(path) ) {
       fs.mkdirSync(out, 0775);
-    else {
+    } else if (fd.existsSync(out)) {
+      throw(path + " already exists");
+    } else {
       var data = this.parse(fs.readFileSync(path, "utf8"));
       fs.writeFileSync(out, data);
     }
@@ -65,34 +84,34 @@ var help = [
 var generators = {};
 
 generators.app = function(){
-  (new Template(__dirname + "/templates/app", fd.normalize(argv[1]))).write();
+  var template = __dirname + "/../templates/app";
+  var path     = fd.normalize(argv[1]);
+  if (fd.existsSync(path)) throw(path + " already exists");
+  fs.mkdirSync(path, 0775);
+  (new Template(template, path)).write();
 };
 
 generators.controller = function(){
-  var template = __dirname + "/templates/controller.coffee";
-  var values   = {name: fd.basename(argv[1])};
-  var path     = argv[1];
+  var template = __dirname + "/../templates/controller.coffee";
+  var values   = {name: camelize(fd.basename(argv[1]))};
   
-  if (fd.basename(path) == path)
-    path = "./app/controllers/" + path
-  var path = fd.normalize(path);
+  var path     = expandPath(argv[1], "./app/controllers/");
+  if ( !fd.extname(path) ) path += ".coffee";
   
-  (new Template(, path, values)).write();
+  (new Template(template, path, values)).write();
 };
 
 generators.model = function(){
-  var template = __dirname + "/templates/model.coffee";
-  var values   = {name: fd.basename(argv[1])};
-  var path     = argv[1];
+  var template = __dirname + "/../templates/model.coffee";
+  var values   = {name: camelize(fd.basename(argv[1]))};
   
-  if (fd.basename(path) == path)
-    path = "./app/models/" + path
-  var path = fd.normalize(path);
+  var path     = expandPath(argv[1], "./app/models/");
+  if ( !fd.extname(path) ) path += ".coffee";
   
   (new Template(template, path, values)).write();
 };
 
 if (generators[argv[0]])
-  generators[argv[0]];
+  generators[argv[0]]();
 else
   util.puts(help);
