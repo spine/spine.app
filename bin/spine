@@ -1,0 +1,98 @@
+#!/usr/bin/env node
+var argv = process.argv.slice(2),
+    util = require("util"),
+    fs   = require("fs"),
+    fd   = require("path")
+    
+var isDir = function(path){
+  return(fs.statSync(path).isDirectory());
+};
+    
+var Template = function(template, path, values){
+  this.template = template;
+  this.path     = path;
+  this.values   = values || {};
+};
+
+Template.prototype.__defineGetter__("files", function(){
+  var stat = fs.statSync(this.template);
+  if ( !stat.isDirectory() )
+    return [this.template];
+  
+    var self = this, 
+        files = [];
+
+    (function next(dir) {
+      fs.readdirSync(dir).forEach(function(file){
+        files.push(file = dir + '/' + file);
+        if (isDir(file)) next(file);
+      });
+    })(this.template);
+  return files;
+});
+
+Template.prototype.write = function(){
+  this.files.forEach(function(path){
+    var out = fd.join(this.path, path.replace(this.template, ""));
+    
+    if ( isDir(path) )
+      fs.mkdirSync(out, 0775);
+    else {
+      var data = this.parse(fs.readFileSync(path, "utf8"));
+      fs.writeFileSync(out, data);
+    }
+  }, this);
+};
+
+Template.prototype.parse = function(data){
+  var self = this;
+  return data.replace(/\{\{([^}]+)\}\}/g, function(_, key){
+    return self.values[key];
+  });
+};
+
+var help = [
+    "usage: spine [options] ",
+    "",
+    "Generates a spine app using the specified command-line options",
+    "",
+    "options:",
+    " app path          Generates a new Spine application",
+    " controller name   Generates a Spine Controller",
+    " model name        Generates a Spine Model",
+].join('\n');
+
+var generators = {};
+
+generators.app = function(){
+  (new Template(__dirname + "/templates/app", fd.normalize(argv[1]))).write();
+};
+
+generators.controller = function(){
+  var template = __dirname + "/templates/controller.coffee";
+  var values   = {name: fd.basename(argv[1])};
+  var path     = argv[1];
+  
+  if (fd.basename(path) == path)
+    path = "./app/controllers/" + path
+  var path = fd.normalize(path);
+  
+  (new Template(, path, values)).write();
+};
+
+generators.model = function(){
+  var template = __dirname + "/templates/model.coffee";
+  var values   = {name: fd.basename(argv[1])};
+  var path     = argv[1];
+  
+  if (fd.basename(path) == path)
+    path = "./app/models/" + path
+  var path = fd.normalize(path);
+  
+  (new Template(template, path, values)).write();
+};
+
+if (generators[argv[0]])
+  generators[argv[0]];
+else
+  util.puts(help);

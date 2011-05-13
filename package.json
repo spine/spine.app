@@ -1,0 +1,21 @@
+{
+  "name": "spine.app",
+  "description": "Spine app generator",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/maccman/spine.app.git"
+  },
+  "author": "Alex MacCaw <info@eribium.org>",
+  "bin": { "spine": "./index" },
+  "engines": {
+    "node": "*"
+  },
+  "dependencies" : { 
+    "spine" : ">= 0.0.4",
+    "coffee-script" : "~1.1.1",
+    "stitch" : "~0.3.1",
+    "express": "~2.3.4",
+    "optimist": "~0.1.9"
+  }
+}
