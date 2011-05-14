@@ -54,8 +54,9 @@ __Any [CoffeeScript](http://jashkenas.github.com/coffee-script) or [LessCSS](htt
         "#item": "item"
       
       init ->
+        this.guide = Guide.init(el: this.item)
         
-Inside your HTML files, you need only require *application.js* and every module will be wrapped up and ready to be loaded. As you can see, the generated *index.html* kicks things off by executing *app/app.coffee* when the page loads.
+Inside your HTML files, you need only require *application.js* and every module will be wrapped up and ready to be loaded. As you can see, the generated *index.html* kicks things off by instantiating *app/app.coffee* when the page loads.
 
     var exports = this;
     jQuery(function(){
