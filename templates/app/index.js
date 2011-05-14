@@ -32,4 +32,4 @@ app.configure(function() {
 
 var port = argv[0] || 9294;
 util.puts("Starting server on port: " + port);
-app.listen();
+app.listen(port);
