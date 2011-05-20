@@ -2,7 +2,15 @@
 var stitch  = require('stitch'),
     express = require('express'),
     util    = require('util'),
+    fs      = require('fs'),
     argv    = process.argv.slice(2);
+    
+stitch.compilers.tmpl = function(module, filename) {
+  var content = fs.readFileSync(filename, 'utf8');
+  content = ["var template = ", JSON.stringify(content), ";", 
+             "module.exports = (function(data){ return jQuery.tmpl(template, data); });\n"].join("");
+  return module._compile(content, filename);
+};
 
 var package = stitch.createPackage({
   paths: [__dirname + '/lib', __dirname + '/app'],
@@ -32,4 +40,4 @@ app.configure(function() {
 
 var port = argv[0] || 9294;
 util.puts("Starting server on port: " + port);
-app.listen(port);
+app.listen();
