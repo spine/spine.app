@@ -38,6 +38,6 @@ app.configure(function() {
   app.get('/application.js', package.createServer());
 });
 
-var port = argv[0] || 9294;
+var port = argv[0] || process.env.PORT || 9294;
 util.puts("Starting server on port: " + port);
 app.listen(port);

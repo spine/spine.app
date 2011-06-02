@@ -1,2 +1,2 @@
-{{name}} = module.exports = Spine.Controller.create
+module.exports = Spine.Controller.create
   init: ->

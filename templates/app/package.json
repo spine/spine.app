@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "engines": {
+    "node": "*"
+  },
+  "dependencies" : { 
+    "coffee-script" : "~1.1.1",
+    "stitch" : "~0.3.1",
+    "express": "~2.3.4"
+  }
+}
