@@ -7,7 +7,7 @@ var stitch  = require('stitch'),
     
 stitch.compilers.tmpl = function(module, filename) {
   var content = fs.readFileSync(filename, 'utf8');
-  content = ["var template = ", JSON.stringify(content), ";", 
+  content = ["var template = jQuery.template(", JSON.stringify(content), ");", 
              "module.exports = (function(data){ return jQuery.tmpl(template, data); });\n"].join("");
   return module._compile(content, filename);
 };
