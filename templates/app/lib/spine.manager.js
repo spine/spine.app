@@ -3,7 +3,8 @@
 // In other words, you feed a manager controllers, and it'll make sure that only controller has an 'active' state at any one time. 
 // This is useful whenever you're implementing tabs or separate views inside an application. 
 //
-// By default, whenever a controller is activated, it's element receives a 'active' class, and whenever it's deactivated it has a 'deactive' class. // You can use these classes to show/hide views and tabs via CSS.
+// By default, whenever a controller is activated, it's element receives a 'active' class. 
+// You can use this class to show/hide views and tabs via CSS.
 // For example:
 //
 //  var users = Users.init();
@@ -13,11 +14,11 @@
 //  users.active();
 //  assert( users.isActive() );
 //  assert( users.el.hasClass("active") );
-//  assert( groups.el.hasClass("deactive") );
+//  assert( ! groups.el.hasClass("active") );
 //  
 //  groups.active();
 //  assert( groups.el.hasClass("active") );
-//  assert( users.el.hasClass("deactive") );
+//  assert( ! users.el.hasClass("active") );
 
 (function(Spine, $){
 
@@ -53,7 +54,13 @@ Manager.include({
 
 Spine.Controller.include({
   active: function(callback){
-    (typeof callback == "function") ? this.bind("active", callback) : this.trigger("active");
+    if (typeof callback == "function") 
+      this.bind("active", callback) 
+    else {
+      var args = Spine.makeArray(arguments);
+      args.unshift("active");
+      this.trigger.apply(this, args);
+    }
     return this;
   },
   

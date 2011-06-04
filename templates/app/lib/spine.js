@@ -15,6 +15,10 @@
     return Array.prototype.slice.call(args, 0);
   };
   
+  var isArray = Spine.isArray = function(value){
+    return Object.prototype.toString.call(value) == "[object Array]";
+  };
+  
   // Shim Array, as these functions aren't in IE
   if (typeof Array.prototype.indexOf === "undefined")
     Array.prototype.indexOf = function(value){
@@ -194,21 +198,8 @@
     
     created: function(sub){
       this.records = {};
-      
-      if (this.attributes)
-        this.attributes = makeArray(this.attributes);
-      else
-        this.attributes = [];
-
-      this.bind("create",  this.proxy(function(record){ 
-        this.trigger("change", "create", record);
-      }));
-      this.bind("update",  this.proxy(function(record){ 
-        this.trigger("change", "update", record);
-      }));
-      this.bind("destroy", this.proxy(function(record){ 
-        this.trigger("change", "destroy", record);
-      }));
+      this.attributes = this.attributes ? 
+        makeArray(this.attributes) : [];
     },
 
     find: function(id){
@@ -226,15 +217,17 @@
     },
 
     refresh: function(values){
+      values = this.fromJSON(values);
       this.records = {};
 
       for (var i=0, il = values.length; i < il; i++) {    
-        var record = this.init(values[i]);
+        var record = values[i];
         record.newRecord = false;
         this.records[record.id] = record;
       }
 
       this.trigger("refresh");
+      return this;
     },
 
     select: function(callback){
@@ -310,8 +303,10 @@
       this.bind("change", callback);
     },
 
-    fetch: function(callback){
-      callback ? this.bind("fetch", callback) : this.trigger("fetch");
+    fetch: function(callbackOrParams){
+      typeof(callbackOrParams) == "function" ? 
+        this.bind("fetch", callbackOrParams) : 
+          this.trigger("fetch", callbackOrParams);
     },
 
     toJSON: function(){
@@ -320,9 +315,9 @@
     
     fromJSON: function(objects){
       if ( !objects ) return;
-      if (typeof objects == "string")
+      if ( typeof objects == "string" )
         objects = JSON.parse(objects)
-      if (typeof objects.length == "number") {
+      if ( isArray(objects) ) {
         var results = [];
         for (var i=0; i < objects.length; i++)
           results.push(this.init(objects[i]));
@@ -344,7 +339,7 @@
     cloneArray: function(array){
       var result = [];
       for (var i=0; i < array.length; i++)
-        result.push(array[i].dup());
+        result.push(array[i].clone());
       return result;
     }
   });
@@ -355,6 +350,7 @@
 
     init: function(atts){
       if (atts) this.load(atts);
+      this.trigger("init", this);
     },
 
     isNew: function(){
@@ -390,7 +386,7 @@
     save: function(){
       var error = this.validate();
       if ( error ) {
-        this.trigger("error", this, error)
+        this.trigger("error", this, error);
         return false;
       }
       
@@ -409,11 +405,13 @@
       this.load(atts);
       return this.save();
     },
-
+    
     destroy: function(){
       this.trigger("beforeDestroy", this);
       delete this.parent.records[this.id];
+      this.destroyed = true;
       this.trigger("destroy", this);
+      this.trigger("change", this, "destroy");
     },
 
     dup: function(){
@@ -447,7 +445,9 @@
       this.trigger("beforeUpdate", this);
       var records = this.parent.records;
       records[this.id].load(this.attributes());
-      this.trigger("update", records[this.id].clone());
+      var clone = records[this.id].clone();
+      this.trigger("update", clone);
+      this.trigger("change", clone, "update");
     },
 
     create: function(){
@@ -456,7 +456,9 @@
       this.newRecord   = false;
       var records      = this.parent.records;
       records[this.id] = this.dup();
-      this.trigger("create", records[this.id].clone());
+      var clone        = records[this.id].clone();
+      this.trigger("create", clone);
+      this.trigger("change", clone, "create");
     },
     
     bind: function(events, callback){
@@ -522,7 +524,7 @@
     },
     
     delay: function(func, timeout){
-      setTimeout(this.proxy(func), timeout || 0);
+      return setTimeout(this.proxy(func), timeout || 0);
     }
   });
   
@@ -530,6 +532,6 @@
   Controller.include(Log);
   
   Spine.App = Class.create();
-  Spine.App.extend(Events)
+  Spine.App.extend(Events);
   Controller.fn.App = Spine.App;
 })();
