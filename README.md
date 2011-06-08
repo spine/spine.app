@@ -6,7 +6,7 @@ Effortlessly generate [Spine](http://maccman.github.com/spine), [CoffeeScript](h
 
 First step is to install the [npm](http://npmjs.org/) package. If you don't already have [npm](http://npmjs.org/) or [NodeJS](http://nodejs.org/) you'll need to install them first.
 
-    $ npm install spine
+    $ npm install spine.app
 
 Then we can generate the initial application structure like this:
 
