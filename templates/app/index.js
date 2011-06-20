@@ -13,7 +13,7 @@ stitch.compilers.tmpl = function(module, filename) {
 };
 
 var package = stitch.createPackage({
-  paths: [__dirname + '/lib', __dirname + '/app'],
+  paths: [__dirname + '/app'],
   dependencies: [
     __dirname + '/lib/json2.js',
     __dirname + '/lib/shim.js',
