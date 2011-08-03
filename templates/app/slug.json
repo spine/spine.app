@@ -1,0 +1,10 @@
+{
+  "main": "./app/index.js",
+  "dependencies": [
+    "shimify", "json2ify", "jquery", "jquery.tmpl"
+  ],
+  "css": "./css/index.less",
+  "public": "./public",
+  "paths": ["./app"],
+  "libs": []
+}
