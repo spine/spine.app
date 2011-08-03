@@ -6,10 +6,11 @@
   <link rel="stylesheet" href="/css/application.css" type="text/css" charset="utf-8">
   <script src="/application.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
+    var jQuery  = require("jqueryify");
     var exports = this;
     jQuery(function(){
       var App = require("app");
-      exports.App = new App({el: $("body")});      
+      exports.app = new App({el: $("body")});      
     });
   </script>
 </head>

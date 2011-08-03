@@ -1,7 +1,7 @@
 {
   "main": "./app/index.js",
   "dependencies": [
-    "es5-shimify", "json2ify", "jquery", "jquery.tmpl"
+    "es5-shimify", "json2ify", "jqueryify", "jquery.tmpl"
   ],
   "css": "./css/index.less",
   "public": "./public",
