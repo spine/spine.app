@@ -1,7 +1,7 @@
 {
   "name": "spine.app",
   "description": "Spine app generator",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "repository": {
     "type": "git",
     "url": "git://github.com/maccman/spine.app.git"
@@ -13,6 +13,6 @@
   },
   "dependencies" : { 
     "coffee-script" : "~1.1.1",
-    "hem" : "~0.0.1"
+    "hem" : "~0.0.6"
   }
 }
