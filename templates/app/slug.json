@@ -1,5 +1,5 @@
 {
-  "main": "./app/index.js",
+  "main": "./app/index",
   "dependencies": [
     "es5-shimify", "json2ify", "jqueryify", "jquery.tmpl"
   ],
