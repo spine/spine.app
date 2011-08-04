@@ -1,12 +1,12 @@
 ##Introduction
 
-Effortlessly generate [Spine](http://maccman.github.com/spine), [CoffeeScript](http://jashkenas.github.com/coffee-script) and [Stitch](https://github.com/sstephenson/stitch) applications. Spine.App gives your applications structure, CommonJS modules, a development server and more. 
+Effortlessly generate [Spine](http://maccman.github.com/spine), [CoffeeScript](http://jashkenas.github.com/coffee-script) and [Hem](https://github.com/maccman/hem) applications. Spine.App gives your applications structure, CommonJS modules, a development server and more. 
 
 ##Usage
 
 First step is to install the [npm](http://npmjs.org/) package. If you don't already have [npm](http://npmjs.org/) or [NodeJS](http://nodejs.org/) you'll need to install them first.
 
-    $ npm install spine.app
+    $ npm install -g spine.app
 
 Then we can generate the initial application structure like this:
 
@@ -31,7 +31,7 @@ Now we've produced a directory structure looking like:
 We can start the application by running `index.js`.
     
     $ cd my_app
-    $ node index.js
+    $ hem server
     
 This will boot up an [Express](http://expressjs.com) server on port [9294](http://localhost:9294). You can now start generating Spine controllers and models:
     
@@ -49,17 +49,20 @@ __Any [CoffeeScript](http://jashkenas.github.com/coffee-script) or [LessCSS](htt
 
     Guide = require("controllers/guide")
     
-    module.exports = Spine.Controller.create
+    class App extends Spine.Controller
       elements:
         "#item": "item"
       
       init ->
-        this.guide = Guide.init(el: this.item)
+        @guide = new Guide(el: @item)
+        
+    # Explicitly export it
+    module.exports = App
         
 Inside your HTML files, you need only require *application.js* and every module will be wrapped up and ready to be loaded. As you can see, the generated *index.html* kicks things off by instantiating *app/app.coffee* when the page loads.
 
     var exports = this;
     jQuery(function(){
       var App = require("app");
-      exports.App = App.init({el: $("#body")});      
+      exports.App = new App({el: $("#body")});      
     });
