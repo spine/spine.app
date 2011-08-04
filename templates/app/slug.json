@@ -3,7 +3,7 @@
   "dependencies": [
     "es5-shimify", "json2ify", "jqueryify", "jquery.tmpl"
   ],
-  "css": "./css/index.less",
+  "css": "./css/index",
   "public": "./public",
   "paths": ["./app"],
   "libs": []
