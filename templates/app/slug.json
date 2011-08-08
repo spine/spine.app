@@ -3,7 +3,8 @@
     "es5-shimify", 
     "json2ify", 
     "jqueryify", 
-    "jquery.tmpl"
+    "jquery.tmpl",
+    "spine"
   ],
   "css": "./css/index",
   "public": "./public",
