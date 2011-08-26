@@ -18,13 +18,13 @@ Now we've produced a directory structure looking like:
     my_app/app
     my_app/app/controllers
     my_app/app/models
+    my_app/css/index.styl
     my_app/lib
     my_app/lib/jquery.js
     my_app/lib/spine.js
     my_app/public
     my_app/public/index.html
     my_app/public/css
-    my_app/public/css/application.css
     my_app/public/images
     my_app/index.js
 
