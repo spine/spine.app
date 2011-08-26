@@ -43,7 +43,7 @@ This will boot up an [Express](http://expressjs.com) server on port [9294](http:
     
 Any application specific code should go in the `app` folder. Otherwise, generic code, should go in the `lib` folder. 
 
-__Any [CoffeeScript](http://jashkenas.github.com/coffee-script) or [LessCSS](http://lesscss.org) files inside the application will be automatically compiled when requested__, you don't need to worry about compiling them manually. 
+__Any [CoffeeScript](http://jashkenas.github.com/coffee-script) or [Stylus](http://learnboost.github.com/stylus/) files inside the application will be automatically compiled when requested__, you don't need to worry about compiling them manually. 
 
 [Stitch](https://github.com/sstephenson/stitch) bundles up all your JavaScript files, enclosing them in a CommonJS wrapper. This means that scripts in the `app` folder need to be CommonJS compliant (basically exactly like normal Node scripts). In other words, to use a module you'll need to `require()` it, and you'll need to explicitly export any global variables. 
 
