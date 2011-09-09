@@ -6,8 +6,5 @@
     "jquery.tmpl",
     "spine"
   ],
-  "css": "./css/index",
-  "public": "./public",
-  "paths": ["./app"],
   "libs": []
 }

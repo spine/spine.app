@@ -28,12 +28,20 @@ Now we've produced a directory structure looking like:
     my_app/public/images
     my_app/index.js
 
-We can start the application by running `index.js`.
+First let's navigate to our application, and install it's npm dependencies:
     
     $ cd my_app
+    $ npm install .
+    
+These will be exported locally in the `./npm_modules` folder. Now, let's install [Hem](http://github.com/maccman/hem), which will be in charge or bundling our application.
+
+    $ npm install -g hem
+    
+And to serve our application up:
+    
     $ hem server
     
-This will boot up an [Express](http://expressjs.com) server on port [9294](http://localhost:9294). You can now start generating Spine controllers and models:
+This will boot up an server on port [9294](http://localhost:9294). You can now start generating Spine controllers and models:
     
     $ spine controller users
         app/controllers/users.coffee
@@ -43,7 +51,7 @@ This will boot up an [Express](http://expressjs.com) server on port [9294](http:
     
 Any application specific code should go in the `app` folder. Otherwise, generic code, should go in the `lib` folder. 
 
-__Any [CoffeeScript](http://jashkenas.github.com/coffee-script) or [Stylus](http://learnboost.github.com/stylus/) files inside the application will be automatically compiled when requested__, you don't need to worry about compiling them manually. 
+Any [CoffeeScript](http://jashkenas.github.com/coffee-script) or [Stylus](http://learnboost.github.com/stylus/) files inside the application will be automatically compiled when requested, you don't need to worry about compiling them manually. 
 
 [Stitch](https://github.com/sstephenson/stitch) bundles up all your JavaScript files, enclosing them in a CommonJS wrapper. This means that scripts in the `app` folder need to be CommonJS compliant (basically exactly like normal Node scripts). In other words, to use a module you'll need to `require()` it, and you'll need to explicitly export any global variables. 
 
