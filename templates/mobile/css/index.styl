@@ -1,0 +1,15 @@
+body, html
+  height: 100%
+  
+.viewport
+  position: relative
+  
+  > *
+    position: absolute
+    left: 0
+    right: 0
+    top: 0
+    bottom: 0
+    
+    &:not(.active)
+      display: none

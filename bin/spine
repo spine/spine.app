@@ -75,6 +75,7 @@ var help = [
     "",
     "options:",
     " app path          Generates a new Spine application",
+    " mobile path       Generates a new Spine Mobile application",
     " controller name   Generates a Spine Controller",
     " model name        Generates a Spine Model",
 ].join('\n');
@@ -92,16 +93,23 @@ generators.app = function(){
   (new Template(template, path)).write();
 };
 
+generators.mobile = function(){
+  var template = __dirname + "/../templates/mobile";
+  var path     = fd.normalize(argv[1]);
+  
+  // Create parent dir
+  if (fd.existsSync(path)) throw(path + " already exists");
+  fs.mkdirSync(path, 0775);
+  
+  (new Template(template, path)).write();
+};
+
 generators.controller = function(){
   var template = __dirname + "/../templates/controller.coffee";
   var values   = {name: camelize(fd.basename(argv[1]))};
   
   var path     = expandPath(argv[1], "./app/controllers/");
   if ( !fd.extname(path) ) path += ".coffee";
-
-  // Make views/css
-  // fs.mkdirSync(expandPath(argv[1], "./app/views/views"), 0775)
-  // fs.mkdirSync(expandPath(argv[1], "./app/views/views"), 0775)
   
   (new Template(template, path, values)).write();
 };

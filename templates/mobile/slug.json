@@ -3,7 +3,8 @@
     "es5-shimify", 
     "json2ify", 
     "jqueryify", 
-    "spine"
+    "spine",
+    "spine.mobile"
   ],
   "libs": []
 }
