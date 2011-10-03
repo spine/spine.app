@@ -8,6 +8,6 @@
     "json2ify": "~0.0.1",
     "jqueryify": "~0.0.1",
     "spine": "~1.0.0",
-    "spine.mobile": "~0.0.7"
+    "spine.mobile": "~1.0.0"
   }
 }
