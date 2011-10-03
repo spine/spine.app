@@ -3,12 +3,11 @@
   "version": "0.0.1",
   "dependencies": { 
     "ace": "~0.0.1",
-    "hem": "~0.0.6",
+    "hem": "~0.1.2",
     "es5-shimify": "~0.0.1",
     "json2ify": "~0.0.1",
     "jqueryify": "~0.0.1",
-    "gfx": "~0.0.3",
-    "spine": "~0.0.9",
-    "spine.mobile": "~0.0.3"
+    "spine": "~1.0.0",
+    "spine.mobile": "~0.0.7"
   }
 }
