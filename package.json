@@ -12,7 +12,7 @@
     "node": "*"
   },
   "dependencies" : { 
-    "coffee-script" : "~1.1.1",
-    "hem" : "~0.1.2"
+    "coffee-script" : "~1.1.2",
+    "hem" : "~0.1.5"
   }
 }
