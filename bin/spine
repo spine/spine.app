@@ -2,8 +2,25 @@
 var argv = process.argv.slice(2),
     util = require("util"),
     fs   = require("fs"),
-    fd   = require("path")
-    
+    fd   = require("path");
+
+var ansi = function(message, color){
+  var ANSI_CODES = {
+    "off": 0,
+    "red": 31,
+    "green": 32,
+    "yellow": 33
+  };
+  
+  if ( !color ) color = "green";
+  
+  var str = "";
+  str += "\033[" + ANSI_CODES[color] + "m";
+  str += message;
+  str += "\033[" + ANSI_CODES["off"] + "m";
+  return str;
+};
+
 var isDir = function(path){
   return(fs.statSync(path).isDirectory());
 };
@@ -52,11 +69,13 @@ Template.prototype.write = function(){
     
     if ( isDir(path) ) {
       fs.mkdirSync(out, 0775);
+      console.log(ansi("\tcreate\t"), out);
     } else if (fd.existsSync(out)) {
       throw(path + " already exists");
     } else {
       var data = this.parse(fs.readFileSync(path, "utf8"));
       fs.writeFileSync(out, data);
+      console.log(ansi("\tcreate\t"), out);
     }
   }, this);
 };
@@ -82,7 +101,7 @@ var help = [
 
 var generators = {};
 
-generators.app = function(){
+generators.app = generators.new = function(){
   var template = __dirname + "/../templates/app";
   var path     = fd.normalize(argv[1]);
   
