@@ -39,8 +39,8 @@ var camelize = function(str){
 };
     
 var Template = function(template, path, values){
-  this.template = fd.resolve(template);
-  this.path     = fd.resolve(path);
+  this.template = template;
+  this.path     = path;
   this.values   = values || {};
 };
 
