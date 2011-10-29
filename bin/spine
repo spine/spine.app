@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 var argv = process.argv.slice(2),
-    util = require("util"),
     fs   = require("fs"),
     fd   = require("path");
 
@@ -126,9 +125,7 @@ generators.mobile = function(){
 generators.controller = function(){
   var template = __dirname + "/../templates/controller.coffee";
   var values   = {name: camelize(fd.basename(argv[1]))};
-  
-  var path     = expandPath(argv[1], "./app/controllers/");
-  if ( !fd.extname(path) ) path += ".coffee";
+  var path     = expandPath(argv[1], "./app/controllers/") + ".coffee";
   
   (new Template(template, path, values)).write();
 };
@@ -136,9 +133,7 @@ generators.controller = function(){
 generators.model = function(){
   var template = __dirname + "/../templates/model.coffee";
   var values   = {name: camelize(fd.basename(argv[1]))};
-  
-  var path     = expandPath(argv[1], "./app/models/");
-  if ( !fd.extname(path) ) path += ".coffee";
+  var path     = expandPath(argv[1], "./app/models/") + ".coffee";
   
   (new Template(template, path, values)).write();
 };
@@ -146,4 +141,4 @@ generators.model = function(){
 if (generators[argv[0]])
   generators[argv[0]]();
 else
-  util.puts(help);
+  console.log(help);
