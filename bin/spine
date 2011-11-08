@@ -3,26 +3,8 @@ var argv = process.argv.slice(2),
     fs   = require("fs"),
     fd   = require("path");
 
-var ansi = function(message, color){
-  var ANSI_CODES = {
-    "off": 0,
-    "red": 31,
-    "green": 32,
-    "yellow": 33
-  };
-  
-  if ( !color ) color = "green";
-  
-  var str = "";
-  str += "\033[" + ANSI_CODES[color] + "m";
-  str += message;
-  str += "\033[" + ANSI_CODES["off"] + "m";
-  return str;
-};
-
-var isDir = function(path){
-  return(fs.statSync(path).isDirectory());
-};
+var cs       = require("coffee-script");
+var Template = require("../src/template");
 
 var expandPath = function(path, dir){
   if (fd.basename(path) == path)
@@ -35,54 +17,6 @@ var camelize = function(str){
     return chr ? chr.toUpperCase() : '';
   }).replace(/^(.)?/, function(match, chr) {
     return chr ? chr.toUpperCase() : '';
-  });
-};
-    
-var Template = function(template, path, values){
-  this.template = template;
-  this.path     = path;
-  this.values   = values || {};
-};
-
-Template.prototype.__defineGetter__("files", function(){
-  if ( !isDir(this.template) )
-    return [this.template];
-  
-    var self = this, 
-        files = [];
-
-    (function next(dir) {
-      fs.readdirSync(dir).forEach(function(file){
-        files.push(file = dir + '/' + file);
-        if (isDir(file)) next(file);
-      });
-    })(this.template);
-  return files;
-});
-
-Template.prototype.write = function(){
-  this.files.forEach(function(path){
-    var out = path.replace(this.template, "");
-    out = fd.join(this.path, out);
-    out = fd.normalize(out);
-    
-    if ( isDir(path) ) {
-      fs.mkdirSync(out, 0775);
-      console.log(ansi("\tcreate\t"), out);
-    } else if (fd.existsSync(out)) {
-      throw(path + " already exists");
-    } else {
-      var data = this.parse(fs.readFileSync(path, "utf8"));
-      fs.writeFileSync(out, data);
-      console.log(ansi("\tcreate\t"), out);
-    }
-  }, this);
-};
-
-Template.prototype.parse = function(data){
-  var self = this;
-  return data.replace(/\{\{([^}]+)\}\}/g, function(_, key){
-    return self.values[key];
   });
 };
 
@@ -128,12 +62,34 @@ generators.controller = function(){
   var path     = expandPath(argv[1], "./app/controllers/") + ".coffee";
   
   (new Template(template, path, values)).write();
+  generators.controllerSpec();
+};
+
+generators.controllerSpec = function(){
+  if ( !fd.existsSync("./test/specs") ) return;
+  
+  var template = __dirname + "/../templates/spec.controller.coffee";
+  var values   = {name: camelize(fd.basename(argv[1]))};
+  var path     = expandPath(argv[1], "./test/specs/controllers/") + ".coffee";
+  
+  (new Template(template, path, values)).write();
 };
 
 generators.model = function(){
   var template = __dirname + "/../templates/model.coffee";
   var values   = {name: camelize(fd.basename(argv[1]))};
   var path     = expandPath(argv[1], "./app/models/") + ".coffee";
+  
+  (new Template(template, path, values)).write();
+  generators.modelSpec();
+};
+
+generators.modelSpec = function(){
+  if ( !fd.existsSync("./test/specs") ) return;
+
+  var template = __dirname + "/../templates/spec.model.coffee";
+  var values   = {name: camelize(fd.basename(argv[1]))};
+  var path     = expandPath(argv[1], "./test/specs/models/") + ".coffee";
   
   (new Template(template, path, values)).write();
 };
