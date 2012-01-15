@@ -70,6 +70,7 @@ generators.controllerSpec = function(){
   
   var template = __dirname + "/../templates/spec.controller.coffee";
   var values   = {name: camelize(fd.basename(argv[1]))};
+  values.path  = values.name.toLowerCase();
   var path     = expandPath(argv[1], "./test/specs/controllers/") + ".coffee";
   
   (new Template(template, path, values)).write();
@@ -89,6 +90,7 @@ generators.modelSpec = function(){
 
   var template = __dirname + "/../templates/spec.model.coffee";
   var values   = {name: camelize(fd.basename(argv[1]))};
+  values.path  = values.name.toLowerCase();
   var path     = expandPath(argv[1], "./test/specs/models/") + ".coffee";
   
   (new Template(template, path, values)).write();

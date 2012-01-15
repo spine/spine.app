@@ -13,10 +13,11 @@
   </script>
 </head>
 <body>
-
   <script type="text/javascript">
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-    jasmine.getEnv().execute();
+    window.onload = function(){
+      jasmine.getEnv().execute();
+    };
   </script>
 </body>
 </html>
