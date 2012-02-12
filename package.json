@@ -11,8 +11,8 @@
   "engines": {
     "node": "*"
   },
-  "dependencies" : { 
+  "dependencies" : {
     "coffee-script" : "~1.1.3",
-    "hem" : "~0.1.7"
+    "hem" : "~0.1.8"
   }
 }
