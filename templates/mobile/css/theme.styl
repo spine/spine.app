@@ -59,3 +59,58 @@ body.stage
       &:active
         -webkit-box-shadow: inset 0 -1px 1px rgba(0, 0, 0, 0.3), inset 0 1px 1px 0 rgba(0, 0, 0, 0.6), 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.2)
         
+      &.right
+        left: auto
+        right: 0
+
+.list
+  // overflow: auto
+  // -webkit-overflow-scrolling: touch
+
+.list .item
+  padding: 0 15px
+  height: 50px
+  line-height: 50px
+  
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1)
+  color: #292D39
+  text-shadow: 0 1px 0 white
+  background: #F6F6F7
+  background: -webkit-gradient(linear, left top, left bottom, from(white), color-stop(0.5, rgba(255, 255, 255, 0.4)), color-stop(0.5, rgba(255, 255, 255, 0))), #F6F6F7
+  
+  img
+    float: right
+    max-width: 30px
+    max-height: 30px
+    display: inline-block
+    margin: 10px 0
+
+  &:active
+    background: #F6F6F7
+    inset-box-shadow(0, 1px, 3px, rgba(0, 0, 0, 0.1))
+    
+form
+  margin: 10px
+  background: #FFF
+  border: 1px solid #aeaeae
+  border-radius(10px)
+  box-shadow(0, 1px 1px, rgba(0, 0, 0, 0.1))
+  
+label
+  display: block
+  border-bottom: 1px solid #aeaeae
+  font-size: 13px
+  padding: 15px
+  
+  &:last-child
+    border-bottom: none
+    
+  span::after
+    content: ':'
+  
+select, input
+  display: block
+  width: 100%
+  font-size: 15px
+  margin: 5px 0 0 0
+  border-box()
