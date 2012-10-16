@@ -1,23 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset=utf8 />
   <title>Jasmine Test Runner</title>
-  <link rel="stylesheet" type="text/css" href="/test/lib/jasmine.css">
-  <script type="text/javascript" src="/test/lib/jasmine.js"></script>
-  <script type="text/javascript" src="/test/lib/jasmine.html.js"></script>
-
-  <script src="/application.js" type="text/javascript" charset="utf-8"></script>
-  <script src="/test/specs.js" type="text/javascript" charset="utf-8"></script>
-  <script type="text/javascript" charset="utf-8">
-    for(var key in specs.modules) specs(key);
-  </script>
+  <link rel="stylesheet" type="text/css" href="lib/jasmine.css">
+  <script type="text/javascript" src="lib/jasmine.js"></script>
+  <script type="text/javascript" src="lib/jasmine-html.js"></script>
 </head>
 <body>
-  <script type="text/javascript">
-    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-    window.onload = function(){
-      jasmine.getEnv().execute();
+
+<script type="text/javascript">
+(function() {
+
+  function loadScript(scriptName, callback) {
+    var head    = document.getElementsByTagName('HEAD').item(0);
+    var script  = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = scriptName;
+    head.appendChild(script);
+    script.onload = callback
+  }
+
+  function startJasmine() {
+
+    // create jasmine environment
+    var jasmineEnv = jasmine.getEnv();
+    jasmineEnv.updateInterval = 250;
+
+    /**
+      Create the `HTMLReporter`, which Jasmine calls to provide results of each spec
+      and each suite. The Reporter is responsible for presenting results to the user.
+     */
+    var htmlReporter = new jasmine.HtmlReporter();
+    jasmineEnv.addReporter(htmlReporter);
+
+    /**
+      Delegate filtering of specs to the reporter. Allows for clicking on single suites
+      or specs in the results to only run a subset of the suite.
+     */
+    jasmineEnv.specFilter = function(spec) {
+      return htmlReporter.specFilter(spec);
     };
-  </script>
+
+    jasmineEnv.execute();
+  }
+
+  window.onload = function() {
+    // determine javascript path based on file:/http: protocol
+    var http          = (location.protocol === "http:")
+    var applicationJS = http ? "/application.js" : "../../public/application.js"
+    var testSpecsJS   = http ? "/test/specs.js"  : "specs.js"
+
+    // dynamically load application and specs javascript files
+    loadScript(applicationJS, function() { loadScript(testSpecsJS, startJasmine) })
+  };
+
+})();
+</script>
+
 </body>
 </html>
