@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset=utf8 />
+  <meta charset="utf8" />
   <title>Jasmine Test Runner</title>
   <link rel="stylesheet" type="text/css" href="lib/jasmine.css">
   <script type="text/javascript" src="lib/jasmine.js"></script>
@@ -22,6 +22,9 @@
   }
 
   function startJasmine() {
+    // initial setup of require modules and loading specs
+    require("lib/setup")
+    for (var key in specs.modules) specs(key);
 
     // create jasmine environment
     var jasmineEnv = jasmine.getEnv();
@@ -48,8 +51,8 @@
   window.onload = function() {
     // determine javascript path based on file:/http: protocol
     var http          = (location.protocol === "http:")
-    var applicationJS = http ? "/application.js" : "../../public/application.js"
-    var testSpecsJS   = http ? "/test/specs.js"  : "specs.js"
+    var applicationJS = http ? "../application.js" : "../../public/application.js"
+    var testSpecsJS   = "specs.js"
 
     // dynamically load application and specs javascript files
     loadScript(applicationJS, function() { loadScript(testSpecsJS, startJasmine) })
