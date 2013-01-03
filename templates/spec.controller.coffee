@@ -1,6 +1,6 @@
 require = window.require
 
-describe '{{name}}', ->
+describe 'The {{name}} Controller', ->
   {{name}} = require('controllers/{{path}}')
   
   it 'can noop', ->
