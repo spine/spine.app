@@ -2,8 +2,7 @@
   "name": "app",
   "version": "0.0.1",
   "dependencies": {
-    "serveup": "~0.0.5",
-    "hem": "~0.2.7",
+    "hem": ">=0.3.0",
     "es5-shimify": "~0.0.1",
     "json2ify": "~0.0.1",
     "jqueryify": "~0.0.3",
