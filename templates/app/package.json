@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "dependencies": {
     "hem": ">=0.3.0",
-    "es5-shimify": "~0.0.1",
-    "json2ify": "~0.0.1",
-    "jqueryify": "~0.0.3",
-    "spine": "~1.0.8"
+    "es5-shimify": "~2.0.5",
+    "json2ify": "~0.0.3",
+    "jqueryify": "~1.9.1",
+    "spine": "~1.0.9"
   }
 }
