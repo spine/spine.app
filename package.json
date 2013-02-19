@@ -1,21 +1,19 @@
 {
   "name": "spine.app",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Spine app generator",
-  "keywords": ["spine", "commonsJS", "coffeescript", "hem", "testacular", "jasmine"],
+  "keywords": ["spine", "commonsJS", "coffeescript", "hem", "scaffold", "jasmine"],
+  "author": "Alex MacCaw <info@eribium.org>",
   "contributors": ["maccman", "aeischeid", "cengebretson"],
   "repository": {
     "type": "git",
-    "url": "git://github.com/maccman/spine.app.git"
+    "url": "git://github.com/spine/spine.app.git"
   },
-  "author": "Alex MacCaw <info@eribium.org>",
   "bin": { "spine": "./bin/spine" },
-  "engines": {
-    "node": "*"
-  },
+  "engine" : [ "node >=0.6.0" ],
   "preferGlobal": true,
   "dependencies" : {
     "coffee-script" : ">=1.3.0",
-    "hem" : ">=0.2.0"
+    "hem" : ">=0.3.0"
   }
 }
