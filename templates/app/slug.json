@@ -9,7 +9,7 @@
   ],
 
   "packages": {
-    "healthlink": {
+    "appName": {
       "libs"    : [],
       "modules" : [
         "es5-shimify",
@@ -17,7 +17,6 @@
         "jqueryify",
         "spine",
         "spine/lib/local",
-        "spine/lib/ajax",
         "spine/lib/route",
         "spine/lib/manager"
       ],
