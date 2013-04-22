@@ -4,13 +4,13 @@
   },
 
   "routes": [
-    { "/"        : "./public" },
+    { ""        : "./public" },
     { "/test"    : "./test/public" }
   ],
 
   "packages": {
     "appName": {
-      "libs"    : [],
+      "libs"    : ["lib/runtime.js"],
       "modules" : [
         "es5-shimify",
         "json2ify",
