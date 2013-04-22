@@ -39,7 +39,7 @@ generators.app = generators.new = function(){
   var path     = fd.normalize(argv[1]);
   
   // Create parent dir
-  if (fd.existsSync(path)) throw(path + " already exists");
+  if (fs.existsSync(path)) throw(path + " already exists");
   fs.mkdirSync(path, 0775);
   
   (new Template(template, path)).write();
@@ -50,7 +50,7 @@ generators.mobile = function(){
   var path     = fd.normalize(argv[1]);
   
   // Create parent dir
-  if (fd.existsSync(path)) throw(path + " already exists");
+  if (fs.existsSync(path)) throw(path + " already exists");
   fs.mkdirSync(path, 0775);
   
   (new Template(template, path)).write();
@@ -66,7 +66,7 @@ generators.controller = function(){
 };
 
 generators.controllerSpec = function(){
-  if ( !fd.existsSync("./test/specs") ) return;
+  if ( !fs.existsSync("./test/specs") ) return;
   
   var template = __dirname + "/../templates/spec.controller.coffee";
   var values   = {name: camelize(fd.basename(argv[1]))};
@@ -86,7 +86,7 @@ generators.model = function(){
 };
 
 generators.modelSpec = function(){
-  if ( !fd.existsSync("./test/specs") ) return;
+  if ( !fs.existsSync("./test/specs") ) return;
 
   var template = __dirname + "/../templates/spec.model.coffee";
   var values   = {name: camelize(fd.basename(argv[1]))};

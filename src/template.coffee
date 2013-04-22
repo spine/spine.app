@@ -30,7 +30,7 @@ class Template
       if isDir(path)
         fs.mkdirSync out, 0o0775
         console.log ansi("\tcreate\t", 'green'), out
-      else if fd.existsSync(out)
+      else if fs.existsSync(out)
         throw ("#{path} already exists")
       else
         data = @parse(fs.readFileSync(path, 'utf8'))
