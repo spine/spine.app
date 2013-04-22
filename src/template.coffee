@@ -28,7 +28,7 @@ class Template
       out = fd.join(@path, out)
       out = fd.normalize(out)
       if isDir(path)
-        fs.mkdirSync out, 0775
+        fs.mkdirSync out, 0o0775
         console.log ansi("\tcreate\t", 'green'), out
       else if fd.existsSync(out)
         throw ("#{path} already exists")
