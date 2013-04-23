@@ -6,6 +6,6 @@ class App extends Spine.Controller
   constructor: ->
     super
     # Getting started - should be removed
-    @html '<h2>Welcome to Spine.js</h2><p>Time to get busy!</p>'
+    @html require("views/sample")({version:Spine.version})
 
 module.exports = App
