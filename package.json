@@ -1,6 +1,6 @@
 {
   "name": "spine.app",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "Spine app generator",
   "keywords": ["spine", "commonsJS", "coffeescript", "hem", "scaffold", "jasmine"],
   "author": "Alex MacCaw <info@eribium.org>",
