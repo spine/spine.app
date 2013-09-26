@@ -1,4 +1,8 @@
 {
+  "routes": [
+    { ""        : "./public" },
+    { "/test"    : "./test/public" }
+  ],
   "dependencies": [
     "es5-shimify", 
     "json2ify", 

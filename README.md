@@ -90,5 +90,5 @@ Inside your HTML files, you need only require *application.js* and every module 
     var exports = this;
     jQuery(function(){
       var App = require("app");
-      exports.App = new App({el: $("#body")});      
+      exports.App = new App({el: $("#body")});
     });
