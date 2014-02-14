@@ -4,6 +4,7 @@ var argv = process.argv.slice(2),
     fd   = require("path");
 
 var cs       = require("coffee-script");
+if (cs.register) cs.register(); // so we can require .coffee files
 var Template = require("../src/template");
 
 var expandPath = function(path, dir){
