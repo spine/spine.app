@@ -2,9 +2,6 @@
   "name": "app",
   "version": "0.0.1",
   "dependencies": {
-    "es5-shimify": "~2.3.0",
-    "json2ify": "~0.0.4",
-    "jqueryify": "~2.1.0",
     "spine": "~1.3.0"
   }
 }

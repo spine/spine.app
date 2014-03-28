@@ -29,7 +29,8 @@ Now we've produced a directory structure looking like:
     my_app/css/index.styl
     my_app/css/mixin.styl
     my_app/lib
-    my_app/lib/runtime.js
+    my_app/lib/jade_runtime.js
+    my_app/lib/jquery.js
     my_app/package.json
     my_app/public
     my_app/public/favicon.ico

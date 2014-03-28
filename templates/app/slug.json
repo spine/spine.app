@@ -10,11 +10,11 @@
 
   "packages": {
     "appName": {
-      "libs"    : ["lib/runtime.js"],
+      "libs"    : [
+        "lib/jade_runtime.js",
+        "jquery"
+      ],
       "modules" : [
-        "es5-shimify",
-        "json2ify",
-        "jqueryify",
         "spine",
         "spine/lib/local",
         "spine/lib/route",
