@@ -12,7 +12,7 @@
     "appName": {
       "libs"    : [
         "lib/jade_runtime.js",
-        "jquery"
+        "lib/jquery.js"
       ],
       "modules" : [
         "spine",
