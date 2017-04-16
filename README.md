@@ -1,8 +1,8 @@
-##Introduction
+## Introduction
 
 Effortlessly generate [Spine](http://github.com/spine/spine), [CoffeeScript](http://jashkenas.github.com/coffee-script) and [Hem](https://github.com/spine/hem) applications. Spine.App gives hooks your application up with some structure, CommonJS modules, and gives you some nice tools to help it grow.
 
-##Usage
+## Usage
 
 First step is to install the [npm](http://npmjs.org/) package. If you don't already have [npm](http://npmjs.org/) or [NodeJS](http://nodejs.org/) you'll need to install them first.
 
