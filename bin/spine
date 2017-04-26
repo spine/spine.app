@@ -67,7 +67,9 @@ generators.controllerSpec = function(){
 
 generators.model = function(){
   var template = __dirname + "/../templates/model.coffee";
-  var values   = {name: camelize(fd.basename(argv[1]))};
+  camelize(fd.basename(argv[1]));
+  var config   = argv.slice(1);
+  var values   = {config: config.length ? "'" + config.join("', '") + "'" : ""};
   var path     = expandPath(argv[1], "./app/models/") + ".coffee";
 
   (new Template(template, path, values)).write();
